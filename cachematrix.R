@@ -54,11 +54,12 @@ cacheSolve <- function(x, ...) {
 
     #if the inverse is not null, return it
     if ( !is.null(i) ) {
-        message("getting cached inverse")
+        message("getting cached inverse...")
         return(i)
     }
 
     #if inverse is null, calculate it using solve and cache it in x
+    message("calculating inverse and caching...")
     m <- x$get()
     i <- solve(m)
     x$setInverse(i) 
