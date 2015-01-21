@@ -1,12 +1,17 @@
-## Put comments here that give an overall description of what your
-## functions do
+#Functions to calculate the inverse of a matrix, using caching
+#If an inverse is cached this will be returned,
+#otherwise an inverse will be calculated, cached and returned
 
-## Write a short comment describing this function
-
+#makeCacheMatrix
+#this function is used to cache the matrix and its inverse
+#returns a list containing functions to get and set values of 
+#x and it's inverse
+#note that x, inverse, set, get, setInverse and getInverse exist in
+#an environment created when makeCacheMatrix is created
 makeCacheMatrix <- function(x = matrix()) {
 
     #Set the local variable inverse to NULL
-    #Note tha this value is defined in the environment in which the 
+    #Note that this value is defined in the environment in which the 
     #this function is defined and is used to cache the inverse
     inverse <- NULL
 
@@ -19,7 +24,11 @@ makeCacheMatrix <- function(x = matrix()) {
     }
 
     #get returns the cached matrix  
-    get <- function() x
+    get <- function() {
+        print(environment())
+        print(objects())
+        x
+    }
 
     #setInverse is used to cache the value of the inverse
     setInverse <- function(i) {
@@ -34,12 +43,14 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-#cacheSolve returns the inverse of a matrix given an object x created
-#by makeCacheMatrix. If x contains a cached inverse, this is returned
+#cacheSolve 
+#returns the inverse of a matrix given an object x created by 
+#makeCacheMatrix. If x contains a cached inverse, this is returned
 #otherwise an inverse is calculated and this is cached in x
 cacheSolve <- function(x, ...) {
 
-    i <- x$getInverse #get the inverse cached in x
+    #get the inverse cached in x
+    i <- x$getInverse()
 
     #if the inverse is not null, return it
     if ( !is.null(i) ) {
@@ -49,7 +60,7 @@ cacheSolve <- function(x, ...) {
 
     #if inverse is null, calculate it using solve and cache it in x
     m <- x$get()
-    i <- solve(m)i
+    i <- solve(m)
     x$setInverse(i) 
     i
 }
