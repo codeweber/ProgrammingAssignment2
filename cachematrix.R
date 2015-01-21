@@ -24,12 +24,8 @@ makeCacheMatrix <- function(x = matrix()) {
     }
 
     #get returns the cached matrix  
-    get <- function() {
-        print(environment())
-        print(objects())
-        x
-    }
-
+    get <- function() x
+    
     #setInverse is used to cache the value of the inverse
     setInverse <- function(i) {
       inverse <<- i
